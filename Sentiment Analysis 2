@@ -1,0 +1,30 @@
+package sentimentAnalysis2;
+
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+
+
+public class ourPresentation {
+
+	public static void main(String[] args) throws FileNotFoundException {
+		System.out.println("Hello, please drag you file to the sentimentAnalysis2 project, then type in the name of your file !");
+		String fileName;
+		double pages;
+		Scanner inputToRead = new Scanner(System.in);
+		String textFileName = inputToRead.nextLine();
+		
+		System.out.println("Please enter the number of pages of the book!");
+		Scanner bookLength = new Scanner(System.in);
+		String bookLengthString = bookLength.nextLine();
+		double bookLengthDouble = Double.parseDouble(bookLengthString);
+		pages = bookLengthDouble;
+		
+		bookLength.close();
+		inputToRead.close();
+		
+		OurCalculator testText = new OurCalculator(pages, textFileName);
+		
+	}
+
+}
