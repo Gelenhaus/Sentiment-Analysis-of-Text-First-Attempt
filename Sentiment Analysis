@@ -1,0 +1,80 @@
+package sentimentAnalysis2;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class OurCalculator {
+	OurCalculator(double pages, String fileName) throws FileNotFoundException {
+
+		
+		// Get the file from ourPresentation and then do comparisons with negative and positive words lists.
+		Scanner fileScanner = new Scanner(new File(fileName));
+		String textString = fileScanner.useDelimiter("\\A").next();
+		textString.replaceAll("\\p{Punct}", "");
+		textString.toLowerCase();
+		String[] textArray = null;
+		textArray = textString.split(" ");
+
+		// getting the positive-words list into an array.
+		Scanner positiveScanner = new Scanner(new File("negative.txt"));
+		String positiveText = positiveScanner.useDelimiter("\\A").next();
+		String[] positiveArray = null;
+		positiveArray = positiveText.split("\n");
+
+		//getting the negative=words list into an array.
+		Scanner negativeScanner = new Scanner(new File("positive.txt"));
+		String negativeText = negativeScanner.useDelimiter("\\A").next();
+		String[] negativeArray = null;
+		negativeArray = negativeText.split("\n");
+		
+		int negativeWords = 0;
+		int positiveWords = 0;
+		
+		// gets you the number of negative words in the text
+				for (int i = 0; i < textArray.length; i++) {
+					for (int j = 0; j < negativeArray.length; j++) {
+						if (textArray[i].equals(negativeArray[j])) {
+							negativeWords++;
+
+						}
+
+					}
+				}
+				for (int n = 0; n < textArray.length; n++) {
+					for( int p = 0; p < positiveArray.length; p++) {
+						if (textArray[n].contentEquals(positiveArray[p])) {
+						positiveWords++;
+						}
+					}
+				}
+				
+				Double negativeWordsDouble = (double) negativeWords;
+				Double positiveWordsDouble = (double) positiveWords;
+				Double textArrayDouble = (double) textArray.length;
+				//Double positiveProportion = positiveWordsDouble / textArrayDouble;
+				//Double negativeProportion = negativeWordsDouble / textArrayDouble;
+				
+				Double newNegativeDouble = negativeWordsDouble / textArrayDouble;
+				Double adjustedNegative = (double)Math.round(newNegativeDouble * 100) / 100;
+				Double newPositiveDouble = positiveWordsDouble / textArrayDouble;
+				Double adjustedPositive = (double)Math.round(newPositiveDouble * 100) / 100; 
+				
+				
+				
+				//System.out.println("The number of negative words in the file is " + negativeWords + ". The number of positive words in the file is " + positiveWords + ".");
+				System.out.println(adjustedNegative * 100 + "%  of the text are negative words." );
+				System.out.println(adjustedPositive * 100 + "%  of the text are positive words.");
+
+		fileScanner.close();
+		positiveScanner.close();
+		negativeScanner.close();
+	}
+
+}
+
+
+
+
+
+
